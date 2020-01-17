@@ -7,6 +7,7 @@ from bboard.settings import ALLOWED_HOSTS
 
 signer = Signer()
 
+
 def send_activation_notification(user):
     if ALLOWED_HOSTS:
         host = 'http://' + ALLOWED_HOSTS[0]
@@ -17,8 +18,10 @@ def send_activation_notification(user):
     body_text = render_to_string('email/activation_letter_body.txt', context)
     user.email_user(subject, body_text)
 
+
 def get_timestamp_path(instance, filename):
     return '%s%s' % (datetime.now().timestamp(), splitext(filename)[1])
+
 
 def send_new_comment_notification(comment):
     if ALLOWED_HOSTS:
