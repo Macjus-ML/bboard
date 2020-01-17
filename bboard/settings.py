@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'bootstrap4',
+    # 'social_django',
     'django_cleanup',
     'easy_thumbnails',
+    'captcha'
 
 ]
 
@@ -132,3 +134,4 @@ THUMBNAIL_ALIASES = {
         }
     }
 }
+THUMBNAIL_BASEDIR = 'thumbnails'

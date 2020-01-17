@@ -1,7 +1,9 @@
 from django.contrib import admin
 import datetime
-from .models import AdvUser, SuperRubric, SubRubric
-from .utilites import send_activation_notification
+
+from .models import AdvUser, SuperRubric, SubRubric, Bb, AdditionalImage
+from .models import Comment
+from .utilities import send_activation_notification
 from .forms import SubRubricForm
 
 
@@ -69,3 +71,32 @@ class SubRubricAdmin(admin.ModelAdmin):
 
 
 admin.site.register(SubRubric, SubRubricAdmin)
+
+
+class AdditionalImageInline(admin.TabularInline):
+    model = AdditionalImage
+
+
+class BbAdmin(admin.ModelAdmin):
+    list_display = ('rubric', 'title', 'content', 'author', 'created_at')
+    list_display_links = ('title', 'content')
+    search_fields = ('title', 'content', 'author')
+    date_hierarchy = 'created_at'
+    fields = (('rubric', 'author'), 'title', 'content', 'price', 'contacts', 'image', 'is_active')
+    inlines = (AdditionalImageInline,)
+
+
+admin.site.register(Bb, BbAdmin)
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('author', 'content', 'created_at', 'is_active')
+    list_display_links = ('author', 'content')
+    list_filter = ('is_active',)
+    search_fields = ('author', 'content',)
+    date_hierarchy = 'created_at'
+    fields = ('author', 'content', 'is_active', 'created_at')
+    readonly_fields = ('created_at',)
+
+
+admin.site.register(Comment, CommentAdmin)
